@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thota Rohini - Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #fdf1ec, #f5e2c8);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 20px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #7a3f94;
+      color: white;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fecd4d;
+    }
+    nav {
+      background-color: #5a2a7e;
+      display: flex;
+      gap: 20px;
+      border-radius: 30px;
+      padding: 10px 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover,
+    nav a.active {
+      background-color: #fecd4d;
+      color: #5a2a7e;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 10%;
+      background: white;
+      margin: 20px 10%;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-image {
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 8px solid #d2b48c;
+      overflow: hidden;
+      animation: colorGlow 10s linear infinite;
+      box-shadow:
+        0 0 35px rgba(255, 206, 86, 0.8),
+        0 0 70px rgba(255, 206, 86, 0.6);
+    }
+
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .content {
+      text-align: center;
+      margin-top: 30px;
+      max-width: 700px;
+    }
+
+    .content h1,
+    .content h2 {
+      animation: fadeInUp 1s ease-in-out both;
+    }
+
+    .content h1 {
+      font-size: 36px;
+      color: #5c3d00;
+      margin-bottom: 10px;
+    }
+
+    .content h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #7a3f94;
+    }
+
+    .content p {
+      font-size: 16px;
+      margin-top: 10px;
+      color: #333;
+    }
+
+    .social-icons-center {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .social-icons-center a {
+      color: white;
+      background-color: #5c3d00;
+      width: 50px;
+      height: 50px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      text-decoration: none;
+      font-size: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .social-icons-center a:hover {
+      background-color: #3b2800;
+    }
+
+    @keyframes colorGlow {
+      0% { box-shadow: 0 0 35px rgba(255, 206, 86, 0.8), 0 0 70px rgba(255, 206, 86, 0.6); border-color: #fecd4d; }
+      25% { box-shadow: 0 0 35px rgba(255, 105, 180, 0.8), 0 0 70px rgba(255, 105, 180, 0.6); border-color: #ff69b4; }
+      50% { box-shadow: 0 0 35px rgba(135, 206, 250, 0.8), 0 0 70px rgba(135, 206, 250, 0.6); border-color: #87cefa; }
+      75% { box-shadow: 0 0 35px rgba(144, 238, 144, 0.8), 0 0 70px rgba(144, 238, 144, 0.6); border-color: #90ee90; }
+      100% { box-shadow: 0 0 35px rgba(255, 206, 86, 0.8), 0 0 70px rgba(255, 206, 86, 0.6); border-color: #fecd4d; }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .popup {
+      position: fixed;
+      top: 100px;
+      right: -500px;
+      width: 350px;
+      background: linear-gradient(135deg, #fdf1ec, #e3d5f3);
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+      padding: 25px;
+      border-radius: 20px 0 0 20px;
+      transition: right 0.5s ease, opacity 0.5s ease;
+      z-index: 999;
+      opacity: 0;
+    }
+
+    .popup.active {
+      right: 30px;
+      opacity: 1;
+    }
+
+    .popup h2 {
+      color: #7a3f94;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    .popup p, .popup ul {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .popup ul {
+      margin-left: 20px;
+      list-style-type: disc;
+    }
+
+    .popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #999;
+    }
+
+    footer {
+      background-color: #7a3f94;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: auto;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Thota Rohini</div>
+    <nav>
+      <a href="#" class="nav-link" data-target="home">Home</a>
+      <a href="#" class="nav-link" data-target="student">Student</a>
+      <a href="#" class="nav-link" data-target="education">Education</a>
+      <a href="#" class="nav-link" data-target="project">Projects</a>
+      <a href="#" class="nav-link" data-target="labs">Labs</a>
+      <a href="#" class="nav-link" data-target="certifications">Certifications</a>
+      <a href="#" class="nav-link" data-target="skills">Skills</a>
+      <a href="#" class="nav-link" data-target="contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="profile-image">
+      <img src="my image.jpg" alt="Thota Rohini" />
+    </div>
+    <div class="content">
+      <h1>Welcome! I am Thota Rohini</h1>
+      <h2>CSE - AI & ML Student</h2>
+      <p>I am passionate about creating intelligent solutions that impact lives.</p>
+      <p>Exploring the frontiers of Machine Learning to shape the future.</p>
+    </div>
+    <div class="social-icons-center">
+      <a href="https://github.com/ThotaRohini/Micro-IT-Internship" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="mailto:rohinithota451@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/thota-rohini-07924432a" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+  </section>
+
+  <div class="popup" id="popup-box">
+    <span class="close-btn" onclick="closePopup()">&times;</span>
+    <div id="popup-content"></div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Thota Rohini. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const data = {
+      home: `
+        <div style="text-align:center;">
+          <h2 style="color: #7a3f94; animation: fadeInUp 0.8s ease;">Welcome</h2>
+          <img src="my image.jpg" alt="Thota Rohini" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #d2b48c; margin: 20px 0; animation: fadeInUp 1s ease;">
+          <h3 style="color: #5c3d00; font-size: 20px; animation: fadeInUp 1.2s ease;">Hey! I am Rohini</h3>
+          <p style="color: #7a3f94; font-size: 18px; animation: fadeInUp 1.4s ease;">CSM Student</p>
+        </div>
+      `,
+      student: `
+        <h2>Student Details</h2>
+        <p><strong>Roll No:</strong> 23BQ1A42H6</p>
+        <p><strong>Year:</strong> 2nd Year</p>
+        <p><strong>Section:</strong> C</p>
+      `,
+      education: `
+        <h2>Education</h2>
+        <p><strong>School:</strong> Katuri Public School</p>
+        <p><strong>Intermediate:</strong> Narayana Junior College</p>
+        <p><strong>BTech:</strong> Vasireddy Venkatadri Institute of Technology</p>
+      `,
+      project: `
+        <h2>Projects</h2>
+        <ul>
+          <li>Sentiment Analysis</li>
+          <li>E-commerce Website</li>
+          <li>Testing Frameworks</li>
+        </ul>
+      `,
+      labs: `
+        <h2>Lab Work</h2>
+        <ul>
+          <li>FSD Lab</li>
+          <li>DBMS Lab</li>
+          <li>ML Lab</li>
+        </ul>
+      `,
+      certifications: `
+        <h2>Certifications</h2>
+        <ul>
+          <li>Generative AI</li>
+          <li>Python Programming</li>
+          <li>Object Oriented Programming through Java</li>
+          <li>Cloud Practitioner and Developer</li>
+          <li>Azure AI</li>
+        </ul>
+      `,
+      skills: `
+        <h2>Skills</h2>
+        <h3>Soft Skills</h3>
+        <ul>
+          <li>Communication</li>
+          <li>Time Management</li>
+          <li>Problem Solving</li>
+          <li>Critical Thinking</li>
+        </ul>
+        <h3>Interpersonal Skills</h3>
+        <ul>
+          <li>Team Collaboration</li>
+          <li>Empathy</li>
+          <li>Leadership</li>
+          <li>Adaptability</li>
+        </ul>
+        <h3>Personality Traits</h3>
+        <ul>
+          <li>Self-Motivated</li>
+          <li>Detail-Oriented</li>
+          <li>Creative</li>
+          <li>Positive Attitude</li>
+        </ul>
+        <h3>Programming Languages</h3>
+        <ul>
+          <li>C</li>
+          <li>Python</li>
+          <li>Java</li>
+          <li>SQL</li>
+        </ul>
+        <h3>Web Development</h3>
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+        </ul>
+      `,
+      contact: `
+        <h2>Contact</h2>
+        <p><strong>Address:</strong> Lalupuram-522017</p>
+        <p><strong>Mobile:</strong> 8125132211</p>
+        <p><strong>Email:</strong> rohinithota451@gmail.com</p>
+      `,
+    };
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = this.getAttribute('data-target');
+        document.getElementById('popup-content').innerHTML = data[target];
+        document.getElementById('popup-box').classList.add('active');
+      });
+    });
+
+    function closePopup() {
+      document.getElementById('popup-box').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
